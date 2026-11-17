@@ -1,4 +1,5 @@
-#include <partition.cpp>
+#include "partition.cpp"
+#pragma once
 
 using namespace std;
 

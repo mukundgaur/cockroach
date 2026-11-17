@@ -1,28 +1,29 @@
-#include <topic.cpp>
-#include <partition.cpp>
-#include <broker.cpp>
-#include <thread>
+#include "topic.cpp"
+#include "broker.cpp"
+#include <unordered_map>
+#pragma once
 
 using namespace std;
 template<class Key, class Value>
 class Leader {
+    public:
 
     Leader() {
         for (int i = 0; i < 10; i++) {
-            topicid_to_topic[i] = new Topic(2, i);
+            topicid_to_topic[i] = new Topic<Key, Value>((size_t) 2, i);
             unordered_map<int, Topic<Key, Value>*>* currmap = new unordered_map<int, Topic<Key, Value>*>();
-            currmap[i] = topicid_to_topic[i];
+            (*currmap)[i] = topicid_to_topic[i];
             topicid_to_broker[i] = new Broker(currmap);
         }
     }
 
-    unordered_map<int, *Broker<Key, Value>> get_broker_map() {
+    unordered_map<int, Broker<Key, Value>*> get_broker_map() {
         return topicid_to_broker;
     }
 
     private:
-    ordered_map<int, *Topic<Key, Value>> topicid_to_topic;
-    unordered_map<int, *Broker<Key, Value>*> topicid_to_broker;
+    unordered_map<int, Topic<Key, Value>*> topicid_to_topic;
+    unordered_map<int, Broker<Key, Value>*> topicid_to_broker;
 
     // all the topics
     // all the partitions

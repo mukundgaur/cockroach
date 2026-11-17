@@ -1,4 +1,6 @@
 #include <chrono>
+#include <iostream>
+#pragma once
 
 using namespace std;
 
@@ -22,6 +24,12 @@ class Event {
 
     chrono::steady_clock::time_point getTimestamp() {
         return timestamp;
+    }
+
+    void print_event() {
+        if constexpr (std::is_same_v<Value, int>) {
+            std::cout << value << '\n';
+        }
     }
 
     private:
